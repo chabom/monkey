@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.1
+// @version      0.1.2
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -10,11 +10,11 @@
 (function() {
   'use strict';
 
-  var custom_view = function() {
-    var x = function(exp, context) {
-      return document.evaluate(exp, context || document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-    };
+  var x = function(exp, context) {
+    return document.evaluate(exp, context || document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+  };
 
+  var custom_view = function() {
     var all_siblings = function(first) {
       var elements = [];
       elements.push(first);
@@ -64,6 +64,8 @@
 
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
+  var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
+  var zoom_out, zoom_in;
 
   // press Enter, 1-5, D
   document.addEventListener('keydown', function(e) {
@@ -101,6 +103,21 @@
     case 68: // D
       var duplicate = document.querySelector('.mapInfoWindow button');
       if (duplicate) { duplicate.click(); }
+      break;
+    case 74: // J
+      if (!zoom_out) {
+        zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('map'));
+      }
+      zoom_out.click();
+      break;
+    case 75: // K
+      if (!zoom_in) {
+        zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('map'));
+      }
+      zoom_in.click();
+      break;
+    case 77: // M
+      map_reset.click();
       break;
     }
   });
