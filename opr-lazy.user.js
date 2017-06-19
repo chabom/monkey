@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1
+// @version      0.1.1
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -65,10 +65,10 @@
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
 
-  // press Enter, 1-5
+  // press Enter, 1-5, D
   document.addEventListener('keydown', function(e) {
     switch(e.keyCode) {
-    case 13: //Enter
+    case 13: // Enter
       if (submit_button.getAttribute('disabled') !== 'disabled') {
         submit_button.click();
         return;
@@ -97,6 +97,10 @@
       for (var i = num - 1; i < stars.length; i = i + 5) {
         stars[i].click();
       }
+      break;
+    case 68: // D
+      var duplicate = document.querySelector('.mapInfoWindow button');
+      if (duplicate) { duplicate.click(); }
       break;
     }
   });
