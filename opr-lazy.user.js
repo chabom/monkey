@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.3
+// @version      0.1.4
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -116,16 +116,16 @@
       if (duplicate) { duplicate.click(); }
       break;
     case 74: // J
-      if (!zoom_out) {
-        zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('map'));
-      }
-      zoom_out.click();
-      break;
-    case 75: // K
       if (!zoom_in) {
         zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('map'));
       }
       zoom_in.click();
+      break;
+    case 75: // K
+      if (!zoom_out) {
+        zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('map'));
+      }
+      zoom_out.click();
       break;
     case 77: // M
       map_reset.click();
