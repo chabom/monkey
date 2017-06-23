@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.4
+// @version      0.1.5
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -77,6 +77,8 @@
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
   var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
   var zoom_out, zoom_in;
+  var films;
+  var film_i = -1;
 
   // press Enter, 1-5, D
   document.addEventListener('keydown', function(e) {
@@ -127,8 +129,21 @@
       }
       zoom_out.click();
       break;
+    case 72: // H
+    case 76: // L
+      if (!films) { films = document.querySelectorAll('#map-filmstrip li img'); }
+
+      if (e.keyCode === 72) {
+        film_i--;
+      } else {
+        film_i++;
+      }
+      if (film_i < 0 || film_i >= films.length) { film_i = 0; }
+      films[film_i].click();
+      break;
     case 77: // M
       map_reset.click();
+      film_i = -1;
       break;
     }
   });
