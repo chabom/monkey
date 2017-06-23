@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.6
+// @version      0.1.7
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -80,7 +80,7 @@
   var films;
   var film_i = -1;
 
-  // press Enter, 1-5, D, M, J/K, H/L, S
+  // press Enter, 1-5, D/U, M, J/K, H/L, S
   document.addEventListener('keydown', function(e) {
     switch(e.keyCode) {
     case 13: // Enter
@@ -114,6 +114,7 @@
       }
       break;
     case 68: // D
+    case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
       if (duplicate) { duplicate.click(); }
       break;
