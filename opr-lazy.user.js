@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.7
+// @version      0.1.8
 // @author       chabom
 // @match        https://opr.ingress.com/recon
 // @grant        none
@@ -73,6 +73,7 @@
     player_stats.parentNode.parentNode.parentNode.appendChild(score_div);
   }();
 
+  var image = document.querySelector('#AnswersController .ingress-background');
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
   var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
@@ -80,7 +81,7 @@
   var films;
   var film_i = -1;
 
-  // press Enter, 1-5, D/U, M, J/K, H/L, S
+  // press Enter, 1-5, D/U, I, M, J/K, H/L, S
   document.addEventListener('keydown', function(e) {
     switch(e.keyCode) {
     case 13: // Enter
@@ -117,6 +118,14 @@
     case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
       if (duplicate) { duplicate.click(); }
+      break;
+    case 73: // I
+      var close = document.querySelector('.modal-dialog button[ng-click="closeModal()"]');
+      if (close) {
+        close.click();
+        return;
+      }
+      image.click();
       break;
     case 74: // J
       if (!zoom_in) {
