@@ -77,12 +77,30 @@
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
   var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
-  var zoom_out, zoom_in;
+  var zoom_out, zoom_in, s_zoom_out, s_zoom_in;
   var films;
   var film_i = -1;
 
   // press Enter, 0-5, 7-9, U, I, O, M, J/K, H/L, G
   document.addEventListener('keydown', function(e) {
+    if (e.shiftKey) {
+      switch(e.keyCode) {
+      case 74: // Shift + J
+        if (!s_zoom_in) {
+          s_zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('street-view'));
+        }
+        s_zoom_in.click();
+        break;
+      case 75: // Shift + K
+        if (!s_zoom_out) {
+          s_zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('street-view'));
+        }
+        s_zoom_out.click();
+        break;
+      }
+      return;
+    }
+
     switch(e.keyCode) {
     case 13: // Enter
       if (submit_button.getAttribute('disabled') !== 'disabled') {
