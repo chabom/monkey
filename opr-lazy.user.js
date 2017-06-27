@@ -102,6 +102,7 @@
       }
       break;
 
+    case 48: // 0
     case 49: // 1
       stars[0].click();
       break;
