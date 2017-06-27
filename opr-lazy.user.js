@@ -81,7 +81,7 @@
   var films;
   var film_i = -1;
 
-  // press Enter, 0-5, 7-9, U, I, M, J/K, H/L, G
+  // press Enter, 0-5, 7-9, U, I, O, M, J/K, H/L, G
   document.addEventListener('keydown', function(e) {
     switch(e.keyCode) {
     case 13: // Enter
@@ -163,6 +163,10 @@
     case 77: // M
       map_reset.click();
       film_i = -1;
+      break;
+    case 79: // O
+      var img = document.querySelector('#content img');
+      if (img) { window.open(img.src); }
       break;
     case 71: // G
       document.querySelector('img.gm-fullscreen-control').click();
