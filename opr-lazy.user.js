@@ -81,7 +81,7 @@
   var films;
   var film_i = -1;
 
-  // press Enter, 1-5, D/U, I, M, J/K, H/L, S
+  // press Enter, 0-5, 7-9, U, I, M, J/K, H/L, G
   document.addEventListener('keydown', function(e) {
     switch(e.keyCode) {
     case 13: // Enter
@@ -114,6 +114,15 @@
       for (var i = num - 1; i < stars.length; i = i + 5) {
         stars[i].click();
       }
+      break;
+    case 55: // 7
+      stars[22].click(); // set star 3 of location
+      break;
+    case 56: // 8
+      stars[24].click(); // set star 5 of location
+      break;
+    case 57: // 9
+      stars[29].click(); // set star 5 of safety
       break;
     case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
