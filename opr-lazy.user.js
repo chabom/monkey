@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.8
+// @version      0.2.4
 // @author       chabom
-// @match        https://opr.ingress.com/recon
+// @match        https://opr.ingress.com/recon*
 // @grant        none
 // ==/UserScript==
 
@@ -81,7 +81,19 @@
   var films;
   var film_i = -1;
 
-  // press Enter, 0-5, 7-9, U, I, O, M, J/K, H/L, G
+  // Enter: click submit, modal button
+  // 0,1:   set low quality
+  // 2-5:   set all star to number
+  // 7:     set location star to 3
+  // 8:     set location star to 5
+  // 9:     set safety star to 5
+  // U:     mark as duplicate
+  // I:     display the candidate image
+  // J/K:   zoom in/out on google map (Shift-J/Shift-K: zoom in/out on street view)
+  // H/L:   display the nearby live portal (L: next, H: prev)
+  // M:     reset google map
+  // O:     open the nearby live portal image
+  // G:     toggle street view full screen
   document.addEventListener('keydown', function(e) {
     if (e.shiftKey) {
       switch(e.keyCode) {
@@ -134,13 +146,13 @@
       }
       break;
     case 55: // 7
-      stars[22].click(); // set star 3 of location
+      stars[22].click();
       break;
     case 56: // 8
-      stars[24].click(); // set star 5 of location
+      stars[24].click();
       break;
     case 57: // 9
-      stars[29].click(); // set star 5 of safety
+      stars[29].click();
       break;
     case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
