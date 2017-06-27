@@ -115,7 +115,6 @@
         stars[i].click();
       }
       break;
-    case 68: // D
     case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
       if (duplicate) { duplicate.click(); }
