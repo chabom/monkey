@@ -155,7 +155,7 @@
       map_reset.click();
       film_i = -1;
       break;
-    case 83: // S
+    case 71: // G
       document.querySelector('img.gm-fullscreen-control').click();
       break;
     }
