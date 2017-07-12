@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.2.4
+// @version      0.2.5
 // @author       chabom
 // @match        https://opr.ingress.com/recon*
 // @grant        none
@@ -67,9 +67,10 @@
     scores.push(x('.//p[2]/span[3]', player_stats).textContent);
     scores.push(x('.//p[3]/span[3]', player_stats).textContent);
     scores.push(x('.//p[4]/span[3]', player_stats).textContent);
+    scores.push( parseInt(scores[1]) + parseInt(scores[2]) );
     var score_div = document.createElement('div');
     score_div.className = "navbar-text navbar-right";
-    score_div.textContent = scores.join(' / ');
+    score_div.textContent = scores[0] + ' / ' + scores[3] + ' (' + scores[1] + ', ' + scores[2] + ')';
     player_stats.parentNode.parentNode.parentNode.appendChild(score_div);
   }();
 
