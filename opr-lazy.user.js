@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.1.8
+// @version      0.2.5
 // @author       chabom
-// @match        https://opr.ingress.com/recon
+// @match        https://opr.ingress.com/recon*
 // @grant        none
 // ==/UserScript==
 
@@ -67,9 +67,10 @@
     scores.push(x('.//p[2]/span[3]', player_stats).textContent);
     scores.push(x('.//p[3]/span[3]', player_stats).textContent);
     scores.push(x('.//p[4]/span[3]', player_stats).textContent);
+    scores.push( parseInt(scores[1]) + parseInt(scores[2]) );
     var score_div = document.createElement('div');
     score_div.className = "navbar-text navbar-right";
-    score_div.textContent = scores.join(' / ');
+    score_div.textContent = scores[0] + ' / ' + scores[3] + ' (' + scores[1] + ', ' + scores[2] + ')';
     player_stats.parentNode.parentNode.parentNode.appendChild(score_div);
   }();
 
@@ -77,12 +78,42 @@
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
   var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
-  var zoom_out, zoom_in;
+  var zoom_out, zoom_in, s_zoom_out, s_zoom_in;
   var films;
   var film_i = -1;
 
-  // press Enter, 1-5, D/U, I, M, J/K, H/L, S
+  // Enter: click submit, modal button
+  // 0,1:   set low quality
+  // 2-5:   set all star to number
+  // 7:     set location star to 3
+  // 8:     set location star to 5
+  // 9:     set safety star to 5
+  // U:     mark as duplicate
+  // I:     display the candidate image
+  // J/K:   zoom in/out on google map (Shift-J/Shift-K: zoom in/out on street view)
+  // H/L:   display the nearby live portal (L: next, H: prev)
+  // M:     reset google map
+  // O:     open the nearby live portal image
+  // G:     toggle street view full screen
   document.addEventListener('keydown', function(e) {
+    if (e.shiftKey) {
+      switch(e.keyCode) {
+      case 74: // Shift + J
+        if (!s_zoom_in) {
+          s_zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('street-view'));
+        }
+        s_zoom_in.click();
+        break;
+      case 75: // Shift + K
+        if (!s_zoom_out) {
+          s_zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('street-view'));
+        }
+        s_zoom_out.click();
+        break;
+      }
+      return;
+    }
+
     switch(e.keyCode) {
     case 13: // Enter
       if (submit_button.getAttribute('disabled') !== 'disabled') {
@@ -102,6 +133,7 @@
       }
       break;
 
+    case 48: // 0
     case 49: // 1
       stars[0].click();
       break;
@@ -114,7 +146,15 @@
         stars[i].click();
       }
       break;
-    case 68: // D
+    case 55: // 7
+      stars[22].click();
+      break;
+    case 56: // 8
+      stars[24].click();
+      break;
+    case 57: // 9
+      stars[29].click();
+      break;
     case 85: // U
       var duplicate = document.querySelector('.mapInfoWindow button');
       if (duplicate) { duplicate.click(); }
@@ -155,7 +195,11 @@
       map_reset.click();
       film_i = -1;
       break;
-    case 83: // S
+    case 79: // O
+      var img = document.querySelector('#content img');
+      if (img) { window.open(img.src); }
+      break;
+    case 71: // G
       document.querySelector('img.gm-fullscreen-control').click();
       break;
     }
