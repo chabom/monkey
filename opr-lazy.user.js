@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.2.5
+// @version      0.2.6
 // @author       chabom
 // @match        https://opr.ingress.com/recon*
 // @grant        none
@@ -32,7 +32,7 @@
 
     var form = document.querySelector('#AnswersController form'),
         qualities = all_siblings( x('.//div[1]/div[1]/span[1]', form) ),
-        locations = all_siblings( x('.//div[2]/div[1]/div[2]', form) );
+        locations = all_siblings( x('.//div[2]/div[3]/div[2]', form) );
 
     // move elements
     var star_block1 = x('.//div[1]/div[3]', form);
@@ -77,7 +77,7 @@
   var image = document.querySelector('#AnswersController .ingress-background');
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
-  var map_reset = document.getElementsByTagName('h4')[1].querySelector('small span');
+  var map_reset = document.getElementsByTagName('h4')[0].querySelector('small span');
   var zoom_out, zoom_in, s_zoom_out, s_zoom_in;
   var films;
   var film_i = -1;
@@ -197,10 +197,10 @@
       break;
     case 79: // O
       var img = document.querySelector('#content img');
-      if (img) { window.open(img.src); }
+      if (img) { window.open(img.src + '=s0'); }
       break;
     case 71: // G
-      document.querySelector('img.gm-fullscreen-control').click();
+      document.querySelectorAll('img.gm-fullscreen-control')[2].click();
       break;
     }
   });
