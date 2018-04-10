@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Lazy Portal Recon
 // @namespace    https://github.com/chabom
-// @version      0.2.6
+// @version      0.2.7
 // @author       chabom
 // @match        https://opr.ingress.com/recon*
 // @grant        none
@@ -78,6 +78,7 @@
   var submit_button = document.querySelector('#submitDiv button');
   var stars = Array.prototype.slice.call(document.getElementsByClassName('button-star'));
   var map_reset = document.getElementsByTagName('h4')[0].querySelector('small span');
+  var skip = x('.//form/div[8]/span', document.getElementById('AnswersController'));
   var zoom_out, zoom_in, s_zoom_out, s_zoom_in;
   var films;
   var film_i = -1;
@@ -94,19 +95,20 @@
   // H/L:   display the nearby live portal (L: next, H: prev)
   // M:     reset google map
   // O:     open the nearby live portal image
+  // P:     skip to the next candidate
   // G:     toggle street view full screen
   document.addEventListener('keydown', function(e) {
     if (e.shiftKey) {
       switch(e.keyCode) {
       case 74: // Shift + J
         if (!s_zoom_in) {
-          s_zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('street-view'));
+          s_zoom_in = x('.//div/div[2]/div[7]/div[1]/div/button[1]', document.getElementById('street-view'));
         }
         s_zoom_in.click();
         break;
       case 75: // Shift + K
         if (!s_zoom_out) {
-          s_zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('street-view'));
+          s_zoom_out = x('.//div/div[2]/div[7]/div[1]/div/button[2]', document.getElementById('street-view'));
         }
         s_zoom_out.click();
         break;
@@ -169,13 +171,13 @@
       break;
     case 74: // J
       if (!zoom_in) {
-        zoom_in = x('.//div/div/div[9]/div[1]/div/div[1]', document.getElementById('map'));
+        zoom_in = x('.//div/div/div[8]/div[1]/div/button[1]', document.getElementById('map'));
       }
       zoom_in.click();
       break;
     case 75: // K
       if (!zoom_out) {
-        zoom_out = x('.//div/div/div[9]/div[1]/div/div[3]', document.getElementById('map'));
+        zoom_out = x('.//div/div/div[8]/div[1]/div/button[2]', document.getElementById('map'));
       }
       zoom_out.click();
       break;
@@ -198,6 +200,9 @@
     case 79: // O
       var img = document.querySelector('#content img');
       if (img) { window.open(img.src + '=s0'); }
+      break;
+    case 80: // P
+      skip.click();
       break;
     case 71: // G
       document.querySelectorAll('img.gm-fullscreen-control')[2].click();
